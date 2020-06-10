@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build",
+    "baseUrl": "src",
+    "removeComments": true,
+    "paths": {
+      "@base": ["lib/structures/types/main"],
+      "@DiscordClient": ["lib/structures/DiscordClient"]
+    }
+  }
+}
