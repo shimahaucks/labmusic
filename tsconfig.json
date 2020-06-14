@@ -7,7 +7,6 @@
 		"removeComments": true,
 		"paths": {
 			"@base": ["lib/structures/types/main"],
-			"@DiscordClient": ["lib/structures/Client"]
 		}
 	}
 }

@@ -1,4 +1,4 @@
-import Client from '@DiscordClient';
+import { Client } from 'lib';
 
 const REGEXPESC = /[-/\\^$*+?.()|[\]{}]/g;
 const zws = String.fromCharCode(8203);

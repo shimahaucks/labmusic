@@ -1,8 +1,6 @@
-import { Command, CommandContext } from 'lib/structures/types/Command';
-import Client from 'lib/structures/Client';
+import { Command, CommandContext, Client } from 'lib';
 
 export default class PingCommand extends Command {
-
 	constructor(client: Client) {
 		super(client, {
 			name: 'ping',

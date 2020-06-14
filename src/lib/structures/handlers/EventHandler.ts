@@ -1,7 +1,7 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
 
-import Client from 'lib/structures/Client';
+import { Client } from 'lib';
 
 const { readdir } = promises;
 

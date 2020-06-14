@@ -1,5 +1,4 @@
-import { Command, CommandContext } from 'lib/structures/types/Command';
-import Client from 'lib/structures/Client';
+import { Command, CommandContext, Client } from 'lib';
 import { MessageReaction, User, ReactionCollectorOptions, MessageCollectorOptions, MessageEmbed } from 'discord.js';
 import * as moment from 'moment-timezone';
 

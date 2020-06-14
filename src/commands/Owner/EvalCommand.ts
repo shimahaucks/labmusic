@@ -1,8 +1,5 @@
 /* eslint-disable no-eval */
-import { Command, CommandContext } from 'lib/structures/types/Command';
-import Utils from 'lib/utils';
-import Type from 'lib/structures/Type';
-import Client from '@DiscordClient';
+import { Command, CommandContext, Utils, Type, Client } from 'lib';
 import { inspect } from 'util';
 
 interface EvalReturn {

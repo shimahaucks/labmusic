@@ -1,6 +1,5 @@
-import Client from 'lib/structures/Client';
 import { PresenceData } from 'discord.js';
-import EventInstance from 'lib/structures/types/Event';
+import { EventInstance, Client } from 'lib';
 
 export default class ReadyEvent extends EventInstance {
 	client: Client;

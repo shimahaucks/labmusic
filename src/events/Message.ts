@@ -1,8 +1,5 @@
-import Client from 'lib/structures/Client';
+import { Client, CommandContext, EventInstance } from 'lib';
 import { Message } from 'discord.js';
-
-import { CommandContext } from 'lib/structures/types/Command';
-import EventInstance from 'lib/structures/types/Event';
 
 export default class MessageEvent extends EventInstance {
 	client: Client;
