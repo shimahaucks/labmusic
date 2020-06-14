@@ -5,36 +5,36 @@ import { CommandContext } from 'lib/structures/types/Command';
 import EventInstance from 'lib/structures/types/Event';
 
 export default class MessageEvent extends EventInstance {
-  client: Client;
+	client: Client;
 
-  events: string[];
+	events: string[];
 
-  constructor(client: Client) {
-    super(client, {
-      events: ['message'],
-    });
-  }
+	constructor(client: Client) {
+		super(client, {
+			events: ['message'],
+		});
+	}
 
-  run(message: Message): void {
-    if (message.author.bot || message.channel.type === 'dm') return;
-    if (!message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES')) return;
+	run(message: Message): void | Promise<Message> {
+		if (message.author.bot || message.channel.type === 'dm') return;
+		if (!message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES')) return;
 
-    const prefixes = [`<@${this.client.user.id}`, `<@!${this.client.user.id}`, 'lm.'];
-    const verifyPrefix = prefixes.find((select) => message.content.startsWith(select));
+		const prefixes = [`<@${this.client.user.id}`, `<@!${this.client.user.id}`, 'lm.'];
+		const verifyPrefix = prefixes.find((select) => message.content.startsWith(select));
 
-    if (typeof verifyPrefix === 'string' && message.content.length > verifyPrefix.length) {
-      const args = message.content.slice(verifyPrefix.length).trim().split(/ +/g);
-      const command = this.client.commands.get(args.shift());
+		if (typeof verifyPrefix === 'string' && message.content.length > verifyPrefix.length) {
+			const args = message.content.slice(verifyPrefix.length).trim().split(/ +/g);
+			const command = this.client.commands.get(args.shift());
 
-      if (command) {
-        const context = new CommandContext({
-          client: this.client,
-          args,
-          message,
-        });
+			if (command) {
+				const context = new CommandContext({
+					client: this.client,
+					args,
+					message,
+				});
 
-        return command.processCommand(context);
-      }
-    }
-  }
+				return command.processCommand(context);
+			}
+		}
+	}
 }

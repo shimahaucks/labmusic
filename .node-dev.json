@@ -1,0 +1,3 @@
+{
+	"ignore": ["src/arguments", "src/commands", "src/languages", "src/listeners"]
+}

@@ -4,43 +4,42 @@ import Client from 'lib/structures/Client';
 import { CommandProps } from './CommandProps';
 
 export abstract class Command {
-  readonly client: Client;
+	readonly client: Client;
 
-  readonly message: Message;
+	readonly message: Message;
 
-  readonly name: string;
+	readonly name: string;
 
-  readonly aliases: string[];
+	readonly aliases: string[];
 
-  readonly ownerOnly: boolean;
+	readonly ownerOnly: boolean;
 
-  constructor(client: Client, options: CommandProps) {
-    this.client = client;
-    this.name = options.name;
-    this.aliases = options.aliases || [];
-    this.ownerOnly = options.ownerOnly;
-  }
+	constructor(client: Client, options: CommandProps) {
+		this.client = client;
+		this.name = options.name;
+		this.aliases = options.aliases || [];
+		this.ownerOnly = options.ownerOnly;
+	}
 
-  processCommand(ctx: CommandContext): void {
-    const { author, channel } = ctx.message;
+	processCommand(ctx: CommandContext): void | Promise<Message> {
+		const { author, channel } = ctx.message;
 
-    if (this.ownerOnly && !this.client.owners.has(author.id))
-      channel.send('Você não tem permissão.');
+		if (this.ownerOnly && !this.client.owners.has(author.id)) return channel.send('Você não tem permissão.');
 
-    return this.run(ctx);
-  }
+		return this.run(ctx);
+	}
 
-  abstract run(ctx: CommandContext): void;
+	abstract run(ctx: CommandContext): void;
 }
 
 export class CommandContext {
-  client: Client;
+	client: Client;
 
-  message: Message;
+	message: Message;
 
-  args: string[];
+	args: string[];
 
-  constructor(options) {
-    Object.assign(this, options);
-  }
+	constructor(options) {
+		Object.assign(this, options);
+	}
 }

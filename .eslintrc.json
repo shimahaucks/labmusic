@@ -22,7 +22,8 @@
     "no-continue": "off",
     "no-plusplus": "off",
 		"max-classes-per-file": ["off", 1],
-		"no-bitwise": "off"
+		"no-bitwise": "off",
+		"class-methods-use-this": "off"
   },
   "extends": [
     "airbnb-base",
