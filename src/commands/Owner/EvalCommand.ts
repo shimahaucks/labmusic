@@ -1,6 +1,7 @@
 /* eslint-disable no-eval */
 import { Command, CommandContext, Utils, Type, Client } from 'lib';
 import { inspect } from 'util';
+import Util from 'lib/utils';
 
 interface EvalReturn {
 	result: any;
@@ -19,18 +20,22 @@ export default class Eval extends Command {
 	}
 
 	async run({ message, args }: CommandContext): Promise<void> {
-		let inserted: string = args.join(' ').replace(new RegExp('--async', 'g'), '').replace(new RegExp('--silent', 'g'), '');
+		const flags = Util.parseFlags(args.join(' '));
+		let inserted: string = flags._;
+		if ('async' in flags) inserted = `(async () => {\n${inserted}\n})()`;
 
-		if (args.includes('--async')) inserted = `(async () => {\n${inserted}\n})()`;
+		const { success, result, type } = await this.eval(message, inserted);
 
-		const { success, result, type } = await this.eval(inserted);
-
-		message.channel.send(`**${success ? 'Output:' : 'Error:'}** ${Utils.codeBlock('js', Utils.clean(this.client, result))}\n**Tipo:** ${Utils.codeBlock('ts', type)}`);
+		if (!('silent' in flags))
+			message.channel.send(`**${success ? 'Output:' : 'Error:'}** ${Utils.codeBlock('js', Utils.clean(this.client, result))}\n**Tipo:** ${Utils.codeBlock('ts', type)}`);
 	}
 
-	async eval(code: string): Promise<EvalReturn> {
+	async eval(message, code: string): Promise<EvalReturn> {
 		// eslint-disable-next-line no-param-reassign
 		code = code.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const msg = message;
 
 		let success;
 		let result;

@@ -3,7 +3,6 @@ import { Client } from 'lib';
 const REGEXPESC = /[-/\\^$*+?.()|[\]{}]/g;
 const zws = String.fromCharCode(8203);
 let sensitivePattern;
-
 class Util {
 	static isFunction(input: any): boolean {
 		return typeof input === 'function';
@@ -25,6 +24,24 @@ class Util {
 
 	static codeBlock(lang: string, expression: string): string {
 		return `\`\`\`${lang}\n${expression || zws}\`\`\``;
+	}
+
+	static parseFlags(content: string): any {
+		const flags = {
+			_: content,
+		};
+		const flagsRegex = /--[a-z0-A]+/g;
+
+		const parser = content.match(flagsRegex);
+		if (!parser) return flags;
+
+		for (let index = 0; index < parser.length; index++) {
+			const arg = parser[index].slice(2);
+			flags[arg] = arg;
+			flags._ = content.replace(parser[index], '');
+		}
+
+		return flags;
 	}
 }
 
