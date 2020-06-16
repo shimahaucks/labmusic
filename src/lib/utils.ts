@@ -26,10 +26,11 @@ class Util {
 		return `\`\`\`${lang}\n${expression || zws}\`\`\``;
 	}
 
-	static parseFlags(content: string): any {
+	static parseFlags(content: string): Record<string, string> {
 		const flags = {
 			_: content,
 		};
+
 		const flagsRegex = /--[a-z0-A]+/g;
 
 		const parser = content.match(flagsRegex);
@@ -38,8 +39,12 @@ class Util {
 		for (let index = 0; index < parser.length; index++) {
 			const arg = parser[index].slice(2);
 			flags[arg] = arg;
-			flags._ = content.replace(parser[index], '');
+
+			// eslint-disable-next-line no-param-reassign
+			content = content.replace(parser[index], '');
 		}
+
+		flags._ = content;
 
 		return flags;
 	}

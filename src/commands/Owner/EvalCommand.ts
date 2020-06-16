@@ -1,7 +1,6 @@
 /* eslint-disable no-eval */
 import { Command, CommandContext, Utils, Type, Client } from 'lib';
 import { inspect } from 'util';
-import Util from 'lib/utils';
 
 interface EvalReturn {
 	result: any;
@@ -20,17 +19,17 @@ export default class Eval extends Command {
 	}
 
 	async run({ message, args }: CommandContext): Promise<void> {
-		const flags = Util.parseFlags(args.join(' '));
+		const flags = Utils.parseFlags(args.join(' '));
 		let inserted: string = flags._;
 		if ('async' in flags) inserted = `(async () => {\n${inserted}\n})()`;
 
-		const { success, result, type } = await this.eval(message, inserted);
+		const { success, result, type } = await this.eval(message, flags, inserted);
 
 		if (!('silent' in flags))
 			message.channel.send(`**${success ? 'Output:' : 'Error:'}** ${Utils.codeBlock('js', Utils.clean(this.client, result))}\n**Tipo:** ${Utils.codeBlock('ts', type)}`);
 	}
 
-	async eval(message, code: string): Promise<EvalReturn> {
+	async eval(message, flags, code: string): Promise<EvalReturn> {
 		// eslint-disable-next-line no-param-reassign
 		code = code.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
 
@@ -58,8 +57,8 @@ export default class Eval extends Command {
 		}
 		if (typeof result !== 'string') {
 			result = inspect(result, {
-				depth: 0,
-				showHidden: false,
+				depth: parseInt(flags.depth) || 0,
+				showHidden: Boolean(flags.showHidden),
 			});
 		}
 
