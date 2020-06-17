@@ -38,7 +38,7 @@ class Util {
 
 		for (let index = 0; index < parser.length; index++) {
 			const arg = parser[index].slice(2);
-			flags[arg] = arg;
+			flags[arg.split('=')[0]] = arg.split('=')[1] || arg;
 
 			// eslint-disable-next-line no-param-reassign
 			content = content.replace(parser[index], '');
@@ -49,5 +49,4 @@ class Util {
 		return flags;
 	}
 }
-
 export default Util;
