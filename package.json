@@ -48,5 +48,8 @@
 		"ts-node-dev": "^1.0.0-pre.44",
 		"tsconfig-paths": "^3.9.0",
 		"typescript": "^3.8.3"
+	},
+	"engines": {
+		"node": ">=13.3.0"
 	}
 }
