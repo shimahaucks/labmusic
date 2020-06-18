@@ -25,7 +25,7 @@
 
 </a>
 
-<a  href="https://twitter.com/https:\/\/twitter.com\/shimahaucks"  target="_blank">
+<a  href="https://twitter.com/shimahaucks"  target="_blank">
 
 <img  alt="Twitter: @shimahaucks"  src="https://img.shields.io/twitter/follow/shimahaucks.svg?style=professional"  />
 
